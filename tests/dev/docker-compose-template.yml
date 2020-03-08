@@ -1,0 +1,38 @@
+version: "3.6"
+services:
+
+  tests.php:
+    build: tests.php
+    image: tests.php:dev
+    container_name: tests.php
+    env_file:
+      - .env
+    environment:
+      XDEBUG_CONFIG: remote_host=${LOOPBACK_IP}
+      PHP_IDE_CONFIG: serverName=${PHPSTORM_SERVER_NAME}
+      UID_VAR: {{ UID_VALUE }}
+      GID_VAR: {{ GID_VALUE }}
+      UID: {{ UID_VALUE }}
+      GID: {{ GID_VALUE }}
+    expose:
+      - "9000"
+    networks:
+      - dev_network
+    volumes:
+      - {{ VOLUME }}
+    links:
+      - tests.chrome
+
+  tests.chrome:
+    image: selenium/standalone-chrome:latest
+    container_name: tests.chrome
+    ports:
+      - "4444:4444"
+    tmpfs:
+      - /dev/shm:size=2048m
+    networks:
+      - dev_network
+
+networks:
+  dev_network:
+    driver: bridge
