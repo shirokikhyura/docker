@@ -1,4 +1,4 @@
-version: "3.6"
+version: "3.5"
 services:
 
   runner.nginx:
@@ -27,7 +27,7 @@ services:
     env_file:
       - .env
     environment:
-      XDEBUG_CONFIG: remote_host=${LOOPBACK_IP}
+      XDEBUG_CONFIG: remote_host=${HOST_IP}
       PHP_IDE_CONFIG: serverName=${PHPSTORM_SERVER_NAME}
       UID_VAR: {{ UID_VALUE }}
       GID_VAR: {{ GID_VALUE }}
